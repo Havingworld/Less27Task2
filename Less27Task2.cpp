@@ -39,7 +39,10 @@ public:
     //Manager(std::string inName) : Employee(inName) {}
     Manager(int inCountWorkers) :nCountWorkers(inCountWorkers) {
         assert(inCountWorkers >= 0);
-        workers = new Worker*[inCountWorkers]; 
+        workers = new Worker*[inCountWorkers];
+        for (int = i; i < inCountWorkers; ++i){
+            workers[i] = new Worker;
+        }
     }
 
     void receiveInstruction(int instruction) {
@@ -66,9 +69,12 @@ public:
 };
 
 class Company {
-    std::vector<Manager> teams; // Команды с менеджерами
+    //std::vector<Manager> teams; // Команды с менеджерами
+    int nCountTeams{0};    
+    Manager** teams {nullptr};
 public:
-    Company(int numTeams, int numWorkersPerTeam) {
+
+   /* Company(int numTeams, int numWorkersPerTeam) {
         for (int i = 0; i < numTeams; ++i) {
             std::string managerName = "Manager" + std::to_string(i + 1);
             auto manager = std::make_shared<Manager>(managerName);
@@ -78,6 +84,14 @@ public:
                 auto worker = std::make_shared<Worker>(workerName);
                 manager->addWorker(worker); // Добавить работника к менеджеру
             }
+        }
+    }    */
+
+    Company (int inCountTeams):nCountTeams(inCountTeams){
+        assert(inCountTeams >=0);
+        teams = mew Manager*[inCountTeams];
+        for (int = i; i < inCountWorkers; ++i){
+            teams[i] = new Manager;
         }
     }
 
