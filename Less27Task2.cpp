@@ -70,7 +70,8 @@ public:
 
 class Company {
     //std::vector<Manager> teams; // Команды с менеджерами
-    int nCountTeams{0};    
+    int nCountTeams{0};
+    int mWorkersPerTeam{0};
     Manager** teams {nullptr};
 public:
 
@@ -87,11 +88,11 @@ public:
         }
     }    */
 
-    Company (int inCountTeams):nCountTeams(inCountTeams){
+    Company (int inCountTeams, int inWorkersPerTeam):nCountTeams(inCountTeams){
         assert(inCountTeams >=0);
         teams = mew Manager*[inCountTeams];
         for (int = i; i < inCountWorkers; ++i){
-            teams[i] = new Manager;
+            teams[i] = new Manager(inWorkersPerTeam);
         }
     }
 
