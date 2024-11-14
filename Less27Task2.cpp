@@ -5,9 +5,9 @@
 #include <cassert>
 
 class Employee {
-    std::string cName{""};
+    std::string cName{ NULL };
 public:
-    Employee(std::string inName) : cName(inName) {}
+    Employee(std::string inName = { NULL }) : cName(inName) {}
 
     void setName() {
         std::cin >> cName;
@@ -21,17 +21,23 @@ public:
 };
 
 class Worker : Employee {
+    char cTaskType{ NULL };
+    int nIDWorker{ NULL };
 public:
-    Worker(std::string inName) : Employee(inName) {}
+    Worker(std::string inName = { NULL }) : Employee(inName) {}
 
-    void receiveInstruction(int instruction) {
-        std::cout << "Worker " << getName() << " received instruction: " << instruction << std::endl;
+    void setTask() {
+        if (cTaskType = NULL) {
+            cTaskType = rand() % 67 + 65;
+            std::cout << "Worker " << getName() << " received instruction: " << cTaskType << std::endl;
+        }
     }
 };
 
 class Manager : Employee {
 
-    int nCountWorkers{0};
+    int nCountWorkers{ 0 };
+    int nIDManager{ NULL };
     //std::vector <Worker> workers{}; // Работники под командой менеджера
     Worker** workers{ nullptr }; //массив работников
 
@@ -40,31 +46,30 @@ public:
     Manager(int inCountWorkers) :nCountWorkers(inCountWorkers) {
         assert(inCountWorkers >= 0);
         workers = new Worker*[inCountWorkers];
-        for (int = i; i < inCountWorkers; ++i){
-            workers[i] = new Worker;
+        for (int i; i < inCountWorkers; ++i){
+            workers[i] = new Worker( "worker" + i );
         }
     }
 
-    void receiveInstruction(int instruction) {
-        int managerID = rand() % 100; // Пример генерации уникального ID для менеджера
-        int hash = instruction + managerID;
+    void receiveTask(int instruction) {
+        int hash = instruction + nIDManager;
         std::srand(hash);
 
-        int tasksCount = rand() % (workers.size() + 1);
+        int tasksCount = rand() % nCountWorkers + 1;
         std::cout << "Manager " << getName() << " is distributing " << tasksCount << " tasks." << std::endl;
 
         for (int i = 0; i < tasksCount; ++i) {
-            if (!workers.empty()) {
-                int randomWorkerIndex = rand() % workers.size();
-                workers[randomWorkerIndex].receiveInstruction(instruction);
-                workers.erase(workers.begin() + randomWorkerIndex); // Удаляем работника, чтобы не повторять
+            if (workers != nullptr) {
+                for (int i; i < nCountWorkers; ++i) {
+                    workers[i]->setTask();
+                }
             }
         }
     }
 
-    void addWorker(std::vector<Worker> worker) {
+    /*void addWorker(std::vector<Worker> worker) {
         workers.push_back(worker);
-    }
+    }*/
 
 };
 
@@ -90,21 +95,21 @@ public:
 
     Company (int inCountTeams, int inWorkersPerTeam):nCountTeams(inCountTeams){
         assert(inCountTeams >=0);
-        teams = mew Manager*[inCountTeams];
-        for (int = i; i < inCountWorkers; ++i){
+        teams = new Manager*[inCountTeams];
+        for (int i; i < inCountTeams; ++i){
             teams[i] = new Manager(inWorkersPerTeam);
         }
     }
 
-    void receiveInstructions() {
+    void receiveTask() {
         int instruction;
         while (true) {
             std::cout << "Enter instruction (any integer), -1 to finish: ";
             std::cin >> instruction;
             if (instruction == -1) break;
 
-            for (int i = 0; i < teams.size(); ++i) {
-                teams[i].receiveInstruction(instruction);
+            for (int i = 0; i < nCountTeams; ++i) {
+                teams[i]->receiveTask(instruction);
             }
         }
     }
@@ -121,7 +126,7 @@ int main() {
     std::cin >> numWorkersPerTeam;
 
     Company company(numTeams, numWorkersPerTeam);
-    company.receiveInstructions();
+    company.receiveTask();
 
     return 0;
 }
