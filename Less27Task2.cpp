@@ -24,7 +24,7 @@ class Worker : Employee {
     char cTaskType{ NULL };
     int nIDWorker{ NULL };
 public:
-    Worker(std::string inName = { NULL }) : Employee(inName) {}
+    Worker(int inIDWorker, std::string inName = { NULL }) : nIDWorker(inIDWorker), Employee(inName) {}
 
     void setTask() {
         if (cTaskType = NULL) {
@@ -43,11 +43,11 @@ class Manager : Employee {
 
 public:
     //Manager(std::string inName) : Employee(inName) {}
-    Manager(int inCountWorkers) :nCountWorkers(inCountWorkers) {
+    Manager(int inIDManager, int inCountWorkers) :nIDManager(inIDManager), nCountWorkers(inCountWorkers) {
         assert(inCountWorkers >= 0);
         workers = new Worker*[inCountWorkers];
         for (int i; i < inCountWorkers; ++i){
-            workers[i] = new Worker( "worker" + i );
+            workers[i] = new Worker( i, "worker_" + i );
         }
     }
 
@@ -97,7 +97,7 @@ public:
         assert(inCountTeams >=0);
         teams = new Manager*[inCountTeams];
         for (int i; i < inCountTeams; ++i){
-            teams[i] = new Manager(inWorkersPerTeam);
+            teams[i] = new Manager(i, inWorkersPerTeam);
         }
     }
 
