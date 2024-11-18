@@ -1,0 +1,68 @@
+//example less27
+
+#include <iostream>
+#include <cassert>
+
+class TrainCar{ //отдельный вагон
+    int passangerMax{0};
+    int passangers{0};
+    class Train* train = nullptr;
+public:
+    void load(int value){ //загрузка вагона пассажирами
+        passangers += value;
+        if (passangers > passangerMax) passangers = passangerMax;
+    }
+
+    int getPassangers(){ //текущее кол-во пассажиров
+        return passangers;
+    }
+
+    TrainCar(class Train*, int inPassengersMax): train(inTrain), passangerMax(inPassengersMax){   //конструктор, создает вагон
+        assert(inTrain != nullptr);
+        assert(inPassengersMax >= 0 );
+    }
+
+    int getNumber();
+};
+
+class Train(){  //поезд
+    int count {0};  //количество вагонов в поезде
+    TrainCar** cars {nullptr};      //указатель на указатель первого эллемента массива - массив вагонов
+public:
+    TrainCar* getCarAt(int index){  //получааем вагон по индексу
+        if (this == nullptr) return nullptr;
+        if (index < 0) return nullptr;
+        if (index >= count) return nullptr;
+        return cars[index];
+    }
+
+    int getCount(){ // получение количества вагонов в поезде
+        return count;
+    }
+
+    Train(int inCount, int inPassengersMax):count(inCount){ //конструктор, создает поезд
+        assert(inCount >= 0);
+        cars = new TrainCar*[inCount];  //создаем массив вагонов через конструктор
+        for (int i = 0; i < count; ++i){
+            cars[i] = new TrainCar(this, inPassengersMax);  //заполняем параметр каждого вагона
+        }
+    }
+}
+
+int TrainCar::getNumber(){
+    for(int i=0, train->getCount(); i++){
+        TrainCar* car = train->getCarAt(i);
+        if(car == this) return i;
+    }
+    asert(false);
+}
+
+int main(){
+    Train* train = new Train(10, 30); //создаем поезд с 10 вагонами на 30 мест каждый
+    for (int i=0; i < train->getCount(); i++){ //заполняем каждый вагон пассажирами
+        int passangers{0};
+        std::cin >> passangers;
+        train->getCarAt(i)->load(passangers); //сначала получаем вагон, затем заполняем вагон пассажирами
+    }
+    return 0;
+}
