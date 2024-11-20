@@ -18,7 +18,7 @@ class Worker : public Employee {
 public:
     Worker(const std::string& inName) : Employee(inName) {}
 
-    void receiveInstruction() {
+    void receiveInstruction() { // set instruktion to worker
         char cTaskType = { 65 + rand() % 3 };
         cInstr = { cTaskType };
         std::cout << "Worker " << getName() << " received instruction: " << getInstr() << std::endl;
@@ -48,7 +48,7 @@ public:
     }
 
 
-    void InstructionsToWorker(int instruction) { // get instruktions to workers
+    void InstructionsToWorker(int instruction) { // set instruktions to workers in team
 
         int temp = instruction + this->nIDManager;
         std::srand(temp);
@@ -92,18 +92,6 @@ public:
             std::string cName = { "Manager_" + std::to_string(i) };
             teams[i] = new Manager(cName, inNumWorkersPerTeam);
         }
-
-        //for (int i = 0; i < inNumTeams; ++i) {
-        //    std::string managerName = "Manager_" + std::to_string(i);
-        //    Manager manager(managerName);
-        //    teams.push_back(manager);
-        //    for (int j = 0; j < numWorkersPerTeam; ++j) {
-        //        std::string workerName = "Worker_" + std::to_string(i) + "_" + std::to_string(j);
-        //        Worker worker(workerName);
-        //        manager.addWorker(worker); // Добавить работника к менеджеру
-        //    }
-        //};
-
       
     }
 
