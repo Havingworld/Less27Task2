@@ -146,9 +146,9 @@ int main() {
     Company* company = new Company(numTeams, numWorkersPerTeam);
     company->InstructionsToManager();
 
-    for (int i{ 0 }; i < company->getNumTeams(); ++i) {
-        delete company->getManagerAt(i);
-    }
+    //for (int i{ 0 }; i < company->getNumTeams(); ++i) {
+    //    delete company->getManagerAt(i);
+    //}
     delete company;
 
     return 0;
